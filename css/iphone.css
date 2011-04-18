@@ -219,10 +219,6 @@ body > header h1 {
 	font-size: 20px;
 }
 
-#frame {
-	min-width:100%;
-}
-
 #meigen {
 	font-family: serif;
 	font-size: 14px;
@@ -230,20 +226,15 @@ body > header h1 {
 }
 
 #author {
-	margin-top: 32px;
-	margin-left: auto;
-	margin-right: 64px;
-}
-
-#author tr {
-	margin-top: 12px;
+	margin-top: 24px;
 	font-size: 12px;
 	font-family: serif;
 }
 
-#author #quote {
-	margin-right:8px;
+#quote {
+	margin-right: 4px;
 }
+
 
 /* ------------------------------------------------------------
 	3. Footer
