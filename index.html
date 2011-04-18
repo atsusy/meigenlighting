@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>meigen lighting</title>
+	<link rel="start" href="/" title="">
+	<link rel="apple-touch-icon" href="apple-touch-icon.png">
+	<link rel="stylesheet" href="css/iphone.css" media="screen">
+	<link type="text/css" rel="Stylesheet" href="css/blackbird.css" />
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+	<script type="text/javascript" src="js/blackbird.js"></script>	
+
+	<script src="js/jquery.jStageAligner.js"></script>
+	<noscript><p id="msgNoscript">当サイトは、ブラウザのJavaScript設定を有効にしてご覧ください。</p></noscript>
+	<script type="text/javascript">
+	$(function() {
+		var url = "http://api.twitter.com/1/statuses/user_timeline.json?screen_name=meigenbot&callback=?"
+		$.getJSON(url, function(json){
+			statuses = json;
+			index = 0;
+			setInterval(function(){
+				var text = statuses[index].text;
+				var result;
+				if(!(result = text.match(/(.+)\((.+)\)$/))){
+					log.error("index:"+index+ " text:"+text);
+					index++;
+					return;
+				}
+				
+				var meigen = result[1];
+				var author = result[2];
+								
+ 				$("#meigen,#author").fadeOut("slow",function() { 
+					var sentences = meigen.replace(/、/g,'、,').replace(/。/g,'。,').split(',');
+					
+					$(".meigen").remove();
+					for(var i in sentences){
+						var sentence = sentences[i];
+						if(sentence){
+							$("#meigen").append('<div class="meigen">'+sentence+'<br></div>');
+						}
+					}
+       				$("#author #name").text(author);
+					
+					$("#frame").jStageAligner("CENTER_MIDDLE");
+            		$("#meigen").fadeIn("slow", function() {
+            			setTimeout(function(){
+    	        			$("#author").fadeIn("slow"); 
+            			}, 1500);
+            		});
+		        });
+		        
+ 		   		index++;
+ 		   		if(index >= statuses.length){
+ 		   			index = 0;
+ 		   		}
+			}, 7000);
+		});
+	});
+	</script>
+</head>
+
+
+<body>
+<div id="frame">
+	<div id="meigen"></div>
+	<table id="author">
+		<tr>
+			<td><img id="quote" src="css/line.png"/></td>
+			<td id="name"></td>
+		</tr>
+	</div>
+</div>
+</body>
+
+</html>
