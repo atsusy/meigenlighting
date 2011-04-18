@@ -29,7 +29,7 @@
 		}
 		
 		url += "&callback=?";
-		log.debug(url);
+
 		$.getJSON(url, args.callback);
 	}
 	
@@ -37,14 +37,13 @@
 	page = 1;
 	function displayStatus(){
 		if(!statuses.length){
-			getStatuses({page:page, count:20, callback:function(json){
+			getStatuses({page:page, count:100, callback:function(json){
 				statuses = json;
 				page++;
 				displayStatus();
 			}});
-		}
-		log.debug(statuses);
-			
+			return;
+		}			
 		var status = statuses.shift();
 		if(status.text && (result = status.text.match(/(.+)\((.+)\)$/))){
 			var meigen = result[1];
